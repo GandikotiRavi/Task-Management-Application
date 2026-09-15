@@ -1,0 +1,176 @@
+{
+  "users": [
+    {
+      "_id": "demo_user_101",
+      "name": "Alex Johnson",
+      "email": "demo@example.com",
+      "password": "$2a$10$EIP3NZH5Yr97XHucPK5kAu/NQe7CdNXTPS6v5LLjWYBNAH.FzNEHC",
+      "createdAt": "2026-09-15T05:39:59.705Z"
+    }
+  ],
+  "tasks": [
+    {
+      "_id": "task_001",
+      "title": "Complete System Architecture Design",
+      "description": "Design the full-stack architecture, database models, and WebSocket event pipelines for the task tracker.",
+      "status": "Completed",
+      "priority": "High",
+      "category": "Architecture",
+      "dueDate": "2026-09-17T05:39:59.708Z",
+      "subtasks": [
+        {
+          "id": "st_1",
+          "title": "Draft ERD diagrams for Users and Tasks",
+          "completed": true
+        },
+        {
+          "id": "st_2",
+          "title": "Define JWT authentication flow",
+          "completed": true
+        },
+        {
+          "id": "st_3",
+          "title": "Setup Socket.IO broadcast schema",
+          "completed": true
+        }
+      ],
+      "userId": "demo_user_101",
+      "createdAt": "2026-09-12T05:39:59.708Z"
+    },
+    {
+      "_id": "task_002",
+      "title": "Implement Interactive Kanban Board",
+      "description": "Add drag & drop and column transitions for Pending, In Progress, and Completed states.",
+      "status": "In Progress",
+      "priority": "Urgent",
+      "category": "Frontend",
+      "dueDate": "2026-09-16T05:39:59.708Z",
+      "subtasks": [
+        {
+          "id": "st_4",
+          "title": "Build column headers with task counters",
+          "completed": true
+        },
+        {
+          "id": "st_5",
+          "title": "Implement HTML5 drag & drop listeners",
+          "completed": true
+        },
+        {
+          "id": "st_6",
+          "title": "Add inline quick-card creation input",
+          "completed": false
+        },
+        {
+          "id": "st_7",
+          "title": "Trigger confetti on task completion",
+          "completed": true
+        }
+      ],
+      "userId": "demo_user_101",
+      "createdAt": "2026-09-14T05:39:59.708Z"
+    },
+    {
+      "_id": "task_003",
+      "title": "Setup Real-time WebSocket Synchronization",
+      "description": "Emit events when tasks are added, updated, or removed to keep multi-client dashboards synchronized.",
+      "status": "In Progress",
+      "priority": "High",
+      "category": "Backend",
+      "dueDate": "2026-09-18T05:39:59.708Z",
+      "subtasks": [
+        {
+          "id": "st_8",
+          "title": "Configure Socket.io on Express server",
+          "completed": true
+        },
+        {
+          "id": "st_9",
+          "title": "Hook event broadcaster in task controller",
+          "completed": true
+        },
+        {
+          "id": "st_10",
+          "title": "Add client reconnection resilience",
+          "completed": false
+        }
+      ],
+      "userId": "demo_user_101",
+      "createdAt": "2026-09-14T05:39:59.708Z"
+    },
+    {
+      "_id": "task_004",
+      "title": "Linear-Grade Dark & Light Theme System",
+      "description": "Implement curated CSS variable tokens with glassmorphic cards and responsive mobile viewport layouts.",
+      "status": "Completed",
+      "priority": "Medium",
+      "category": "Design",
+      "dueDate": "2026-09-14T05:39:59.708Z",
+      "subtasks": [
+        {
+          "id": "st_11",
+          "title": "Select Linear-grade color palette tokens",
+          "completed": true
+        },
+        {
+          "id": "st_12",
+          "title": "Implement smooth theme toggle switch",
+          "completed": true
+        }
+      ],
+      "userId": "demo_user_101",
+      "createdAt": "2026-09-11T05:39:59.708Z"
+    },
+    {
+      "_id": "task_005",
+      "title": "Write Comprehensive Unit & Integration Tests",
+      "description": "Verify JWT authentication middleware, task filtering queries, and controller responses.",
+      "status": "Pending",
+      "priority": "Medium",
+      "category": "Testing",
+      "dueDate": "2026-09-20T05:39:59.708Z",
+      "subtasks": [
+        {
+          "id": "st_13",
+          "title": "Unit test authController endpoints",
+          "completed": false
+        },
+        {
+          "id": "st_14",
+          "title": "Integration test task CRUD operations",
+          "completed": false
+        },
+        {
+          "id": "st_15",
+          "title": "Validate subtask update mutations",
+          "completed": false
+        }
+      ],
+      "userId": "demo_user_101",
+      "createdAt": "2026-09-15T05:39:59.708Z"
+    },
+    {
+      "_id": "task_006",
+      "title": "Slide-Over Task Detail Drawer & Activity Log",
+      "description": "Create a rich side drawer to inspect tasks, manage subtasks, and add notes.",
+      "status": "Pending",
+      "priority": "Low",
+      "category": "Frontend",
+      "dueDate": "2026-09-22T05:39:59.708Z",
+      "subtasks": [
+        {
+          "id": "st_16",
+          "title": "Design drawer layout with escape key dismiss",
+          "completed": false
+        },
+        {
+          "id": "st_17",
+          "title": "Support interactive subtask checkboxes",
+          "completed": false
+        }
+      ],
+      "userId": "demo_user_101",
+      "createdAt": "2026-09-15T05:39:59.708Z"
+    }
+  ]
+}

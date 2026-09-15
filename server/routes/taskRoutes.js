@@ -1,22 +1,15 @@
-const router=require('express').Router();
+const express = require('express');
+const router = express.Router();
+const taskController = require('../controllers/taskController');
+const { verifyToken } = require('../middleware/auth');
 
-let tasks=[];
+// All task routes require authentication
+router.use(verifyToken);
 
-router.get('/',(req,res)=>{
- res.json(tasks);
-});
+router.get('/', taskController.getTasks);
+router.get('/stats', taskController.getTaskStats);
+router.post('/', taskController.createTask);
+router.put('/:id', taskController.updateTask);
+router.delete('/:id', taskController.deleteTask);
 
-router.post('/',(req,res)=>{
- tasks.push(req.body);
- res.json(req.body);
-});
-
-router.put('/:id',(req,res)=>{
- res.json({message:'Task Updated'});
-});
-
-router.delete('/:id',(req,res)=>{
- res.json({message:'Task Deleted'});
-});
-
-module.exports=router;
+module.exports = router;

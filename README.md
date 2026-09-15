@@ -1,132 +1,103 @@
-# Task Management Application
-# Task Management Application
+# TaskFlow — Modern Task Management Application
 
-A full-stack web-based Task Management Application that helps users create, organize, update, and track their daily tasks efficiently.
-
-The application provides secure user authentication, task CRUD operations, and a responsive user interface for desktop and mobile devices.
+A full-stack, responsive, user-friendly, and interactive Task Management web application built with **React**, **Vite**, **Node.js**, **Express**, **Socket.IO**, and **MongoDB** (with automatic zero-setup persistent fallback).
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-### 🔐 User Authentication
-- User registration and login system
-- Secure password encryption
-- JWT-based authentication
-- Protected user routes
-- User-specific task management
+- **🔐 User Authentication & Authorization**:
+  - Secure registration and login with password hashing (`bcryptjs`)
+  - JWT (`jsonwebtoken`) token-based authorization with Bearer header interceptor
+  - Protected API routes and protected client-side routes
+  - One-click **Instant Demo Login** for quick testing and evaluation without typing credentials
+  - User-isolated tasks and workspace
 
----
+- **📋 Complete Task CRUD Operations**:
+  - **Create**: Add new tasks with title, rich description, status, priority, category tag, and due date
+  - **Read**: Browse tasks with real-time text search, status pills filtering, priority filtering, and multiple sort modes
+  - **Update**: Edit task details, progress tasks through workflows (Pending ➔ In Progress ➔ Completed), or toggle completion status directly
+  - **Delete**: Safe task removal protected by confirmation dialogs
+  - **Celebration Confetti**: Dynamic confetti burst animation (`canvas-confetti`) whenever a task is completed!
 
-### 📝 Task Management
+- **📊 Dynamic Analytics & Metrics**:
+  - 5 interactive KPI stat cards (Total Tasks, In Progress, Completed, Pending, Overdue)
+  - Live completion velocity progress bar calculation
 
-Users can:
+- **🎨 Two Rich Interactive Views**:
+  - **Kanban Board**: 3-column drag-and-drop workflow (`Pending`, `In Progress`, `Completed`) with quick-action progress buttons
+  - **Table / List View**: Clean, compact table view with completion checkboxes, category tags, priority pills, and quick actions
 
-- Create new tasks
-- View all tasks
-- Update existing tasks
-- Delete tasks
-- Change task status
+- **⚡ Real-Time WebSocket Synchronization**:
+  - Socket.IO updates tasks live across multiple tabs and browser windows
+  - Stackable Toast notifications alert active users of team updates
 
-Task details include:
+- **🌓 Sleek Modern Design**:
+  - Curated Dark Mode (default) and Light Mode with instant toggle
+  - Glassmorphic card surfaces, fluid typography (*Outfit* & *Inter*), and subtle micro-interactions
+  - Fully responsive layout for desktop, tablet, and mobile screens
 
-- Task title
-- Description
-- Status
-- Due date
-- Creation date
-
----
-
-### 📊 Task Tracking
-
-Tasks can be organized using different statuses:
-
-- Pending
-- In Progress
-- Completed
-
-This helps users monitor their work progress.
+- **🛡️ Resilient Dual-Mode Database**:
+  - Seamlessly connects to MongoDB if available via `MONGODB_URI`
+  - Automatically falls back to a file-backed persistent JSON store (`server/data/store.json`) if MongoDB service is offline, guaranteeing **zero runtime crashes or setup roadblocks**!
 
 ---
 
-### 📱 Responsive Design
+## 🏗️ Tech Stack
 
-The application works on:
-
-- Desktop screens
-- Tablets
-- Mobile devices
-
-Built using responsive UI techniques for better user experience.
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 18, Vite, Lucide React, Canvas Confetti, Axios, Socket.IO Client, Vanilla CSS Tokens |
+| **Backend** | Node.js, Express.js, Socket.IO, Mongoose, JWT, bcryptjs, CORS, Dotenv |
+| **Database** | MongoDB / Mongoose with persistent local JSON store fallback |
 
 ---
 
-### ⚡ Real-Time Updates (Optional)
+## 🚀 Getting Started
 
-Using WebSocket technology:
+### 1. Prerequisites
+- **Node.js** (v18 or higher)
+- **npm** (v9 or higher)
 
-- Tasks can update instantly
-- Multiple users can see changes without refreshing
-- Improves collaboration experience
+### 2. Backend Setup
+```bash
+cd server
+npm install
+npm start
+```
+> The server will start on `http://localhost:5000`. If MongoDB is running locally or configured via `.env`, it connects automatically. Otherwise, it runs seamlessly in persistent fallback mode.
 
----
-
-# 🛠️ Technology Stack
-
-## Frontend
-
-- React.js
-- HTML5
-- CSS3
-- JavaScript
-- React Router
-- Axios
-
-## Backend
-
-- Node.js
-- Express.js
-
-## Database
-
-- MongoDB
-- Mongoose
-
-## Authentication
-
-- JSON Web Token (JWT)
-- bcrypt
-
-## Real-Time Communication
-
-- Socket.IO
+### 3. Frontend Setup
+```bash
+cd client
+npm install
+npm run dev
+```
+> The Vite frontend will start on `http://localhost:5173`.
 
 ---
 
-# 📂 Project Structure
+## 📡 API Endpoints
 
-Task-Management-Application
+### Authentication (`/api/auth`)
+- `POST /api/auth/register` — Register a new account
+- `POST /api/auth/login` — Sign in with email and password
+- `POST /api/auth/demo` — Instant demo sign-in (1-click access)
+- `GET /api/auth/me` — Retrieve current user profile (requires Bearer token)
 
-│
-├── client
-│ ├── src
-│ │ ├── components
-│ │ ├── pages
-│ │ ├── App.jsx
-│ │ └── main.jsx
-│
-├── server
-│ ├── models
-│ │ ├── User.js
-│ │ └── Task.js
-│ │
-│ ├── routes
-│ │ ├── authRoutes.js
-│ │ └── taskRoutes.js
-│ │
-│ ├── controllers
-│ ├── middleware
-│ └── server.js
-│
-└── README.md
+### Tasks (`/api/tasks`) *(All require Bearer token)*
+- `GET /api/tasks` — Retrieve tasks with query filters (`status`, `priority`, `search`, `sortBy`)
+- `GET /api/tasks/stats` — Retrieve analytics counts and completion percentage
+- `POST /api/tasks` — Create a new task
+- `PUT /api/tasks/:id` — Update task details or status
+- `DELETE /api/tasks/:id` — Delete a task
+
+---
+
+## 🧪 Running Automated Tests
+
+Run the built-in end-to-end integration test suite:
+```bash
+cd server
+node test_integration.js
+```
