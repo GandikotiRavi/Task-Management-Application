@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
-import Sidebar from '../components/Sidebar';
-import Navbar from '../components/Navbar';
+import BrowserHeader from '../components/BrowserHeader';
 import ProjectHero from '../components/ProjectHero';
 import TaskKanban from '../components/TaskKanban';
 import TaskList from '../components/TaskList';
+import AnalyticsView from '../components/AnalyticsView';
 import TaskDetailDrawer from '../components/TaskDetailDrawer';
 import TaskFormModal from '../components/TaskFormModal';
-import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import ToastContainer from '../components/ToastContainer';
 
 const Dashboard = () => {
-  const { viewMode } = useTasks();
+  const { activeBrowserTab, viewMode } = useTasks();
 
-  // Create Task Modal State
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [defaultStatusForNew, setDefaultStatusForNew] = useState('Pending');
-
-  // Mobile sidebar state
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const handleOpenNewTask = (initialStatus = 'Pending') => {
     setDefaultStatusForNew(initialStatus);
@@ -26,42 +21,38 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="real-app-shell">
-      {/* Real-world Collapsible Left Sidebar */}
-      <Sidebar
-        onOpenNewTask={() => handleOpenNewTask('Pending')}
-        isMobileOpen={isMobileSidebarOpen}
-        onCloseMobile={() => setIsMobileSidebarOpen(false)}
-      />
+    <div className="official-browser-frame">
+      {/* 1. Official Browser Shell Header (Window Controls, Tabs, Omnibox, Bookmarks) */}
+      <BrowserHeader onOpenNewTask={() => handleOpenNewTask('Pending')} />
 
-      {/* Main Canvas Area */}
-      <div className="main-canvas">
-        {/* Top Breadcrumbs & Search Command Bar */}
-        <Navbar
-          onOpenNewTask={() => handleOpenNewTask('Pending')}
-          onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-        />
+      {/* 2. Official Browser Viewport Web Content Area */}
+      <div className="browser-viewport-content">
+        {activeBrowserTab === 'analytics' ? (
+          <AnalyticsView />
+        ) : (
+          <>
+            {/* Project Overview Banner & View Controls */}
+            <ProjectHero />
 
-        {/* Project Header Banner & Filters */}
-        <ProjectHero />
-
-        {/* View Content: Kanban Board vs Table List */}
-        <main style={{ flex: 1 }}>
-          {viewMode === 'kanban' ? <TaskKanban /> : <TaskList />}
-        </main>
+            {/* Main Interactive Work Area: Board vs Table */}
+            <main className="browser-main-workspace">
+              {viewMode === 'kanban' ? <TaskKanban /> : <TaskList />}
+            </main>
+          </>
+        )}
       </div>
 
-      {/* Slide-over Task Detail Drawer (Linear / Asana Style) */}
+      {/* Slide-over Task Detail Drawer */}
       <TaskDetailDrawer />
 
-      {/* Full Task Create Modal */}
+      {/* Full Task Create / Edit Modal */}
       <TaskFormModal
         isOpen={isFormModalOpen}
         onClose={() => setIsFormModalOpen(false)}
         defaultStatus={defaultStatusForNew}
       />
 
-      {/* Toast Notification Stack */}
+      {/* Real-time Stackable Toasts */}
       <ToastContainer />
     </div>
   );

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: '/api',
+  timeout: 4000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -24,8 +25,10 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // If token expired or invalid, clear local storage
-      const isAuthRoute = error.config.url.includes('/auth/login') || error.config.url.includes('/auth/register');
+      const isAuthRoute =
+        error.config.url.includes('/auth/login') ||
+        error.config.url.includes('/auth/register') ||
+        error.config.url.includes('/auth/demo');
       if (!isAuthRoute) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');

@@ -44,9 +44,10 @@ app.use('/api/tasks', taskRoutes);
 // Health check endpoint (for API status)
 app.get('/api/health', (req, res) => {
   res.json({
-    name: 'Task Management API',
+    name: 'TaskFlow Management API',
     status: 'Healthy',
-    version: '1.0.0'
+    version: '2.0.0',
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -64,11 +65,12 @@ if (fs.existsSync(clientDist)) {
 } else {
   app.get('/', (req, res) => {
     res.json({
-      name: 'Task Management API',
+      name: 'TaskFlow Management API',
       status: 'Healthy',
       endpoints: {
         auth: ['/api/auth/register', '/api/auth/login', '/api/auth/demo', '/api/auth/me'],
-        tasks: ['/api/tasks', '/api/tasks/stats', '/api/tasks/:id']
+        tasks: ['/api/tasks', '/api/tasks/stats', '/api/tasks/:id'],
+        health: ['/api/health']
       }
     });
   });
@@ -83,11 +85,25 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server
-const PORT = process.env.PORT || 5000;
+// Start Server with dynamic fallback
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 5000;
+
+const startListening = (port) => {
+  server.listen(port, '0.0.0.0', () => {
+    console.log(`[Server] Running on http://localhost:${port}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`[Server] Port ${port} is in use, retrying on port ${port + 1}...`);
+      server.close();
+      startListening(port + 1);
+    } else {
+      console.error('[Server] Listen error:', err);
+    }
+  });
+};
 
 connectDB().then(() => {
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log(`[Server] Running on http://localhost:${PORT}`);
-  });
+  startListening(DEFAULT_PORT);
 });
