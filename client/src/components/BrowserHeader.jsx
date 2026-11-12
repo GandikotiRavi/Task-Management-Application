@@ -615,3 +615,4 @@ const BrowserHeader = ({ onOpenNewTask }) => {
 };
 
 export default BrowserHeader;
+

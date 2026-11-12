@@ -12,7 +12,35 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='18' x='3' y='3' rx='2'/><path d='m9 12 2 2 4-4'/></svg>" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Fallback message shown ONLY if opened directly via file:// instead of http:// -->
+      <noscript>Please enable JavaScript to run TaskFlow.</noscript>
+      <div id="file-protocol-notice" style="display: none; min-height: 100vh; background: #0d0f14; color: #f1f5f9; font-family: 'Inter', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; padding: 24px;">
+        <div style="max-width: 560px; width: 100%; background: #171b26; border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 36px 32px; box-shadow: 0 12px 36px rgba(0,0,0,0.5); text-align: center;">
+          <div style="width: 56px; height: 56px; border-radius: 12px; background: rgba(99, 102, 241, 0.15); color: #6366f1; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px;">
+            🚀
+          </div>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.45rem; margin-bottom: 8px;">How to Open TaskFlow</h2>
+          <p style="color: #94a3b8; font-size: 0.92rem; line-height: 1.5; margin-bottom: 24px;">
+            Modern web applications cannot be opened directly from the filesystem (<code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; color: #f59e0b;">file:///</code>). They run securely on a local server.
+          </p>
+          <div style="background: #1e2332; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 18px; text-align: left; margin-bottom: 24px;">
+            <p style="font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; color: #f1f5f9;">👉 Quick 1-Click Launch:</p>
+            <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.6;">
+              In your project folder, double-click <strong style="color: #6366f1;">Start-App.bat</strong> (or run <code style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 3px;">npm start</code> in terminal). It will automatically launch the app and open it in your browser!
+            </p>
+          </div>
+          <a href="http://localhost:5000" id="open-localhost-link" style="display: inline-block; background: #6366f1; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.92rem;">
+            Open http://localhost:5000 &rarr;
+          </a>
+        </div>
+      </div>
+      <script>
+        if (window.location.protocol === 'file:') {
+          document.getElementById('file-protocol-notice').style.display = 'flex';
+        }
+      </script>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
