@@ -22,7 +22,16 @@ export const AuthProvider = ({ children }) => {
 
   const [token, setToken] = useState(() => localStorage.getItem('token') || null);
   const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  // Always default to light; clear any old 'dark' saved value
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    // If user explicitly picked dark via toggle, respect it; but wipe stale dark from old sessions
+    if (saved === 'dark' && !localStorage.getItem('theme_user_chosen')) {
+      localStorage.removeItem('theme');
+      return 'light';
+    }
+    return saved || 'light';
+  });
   const [isOffline, setIsOffline] = useState(false);
 
   // Apply theme to document element
@@ -32,7 +41,15 @@ export const AuthProvider = ({ children }) => {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme((prev) => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      if (next === 'dark') {
+        localStorage.setItem('theme_user_chosen', '1');
+      } else {
+        localStorage.removeItem('theme_user_chosen');
+      }
+      return next;
+    });
   };
 
   // Verify auth session on initial load
